@@ -1,0 +1,75 @@
+{
+  "etag": "AAAAANz6IYo=",
+  "properties": {
+    "publisherEmail": "MR367640@fiap.com.br",
+    "publisherName": "QuantumFinance",
+    "notificationSenderEmail": "MR367640@fiap.com.br",
+    "provisioningState": "Succeeded",
+    "targetProvisioningState": "",
+    "createdAtUtc": "2026-10-07T11:35:51.2606264Z",
+    "gatewayUrl": "https://apim-quantumfinance-credit.azure-api.net",
+    "gatewayRegionalUrl": null,
+    "portalUrl": null,
+    "developerPortalUrl": null,
+    "managementApiUrl": null,
+    "scmUrl": null,
+    "hostnameConfigurations": [
+      {
+        "type": "Proxy",
+        "hostName": "apim-quantumfinance-credit.azure-api.net",
+        "encodedCertificate": null,
+        "keyVaultId": null,
+        "certificatePassword": null,
+        "negotiateClientCertificate": false,
+        "certificate": null,
+        "defaultSslBinding": true,
+        "identityClientId": null,
+        "certificateSource": "BuiltIn",
+        "certificateStatus": null
+      }
+    ],
+    "publicIPAddresses": null,
+    "privateIPAddresses": null,
+    "additionalLocations": null,
+    "virtualNetworkConfiguration": null,
+    "customProperties": {
+      "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10": "False",
+      "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11": "False",
+      "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10": "False",
+      "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11": "False",
+      "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30": "False",
+      "Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2": "False"
+    },
+    "virtualNetworkType": "None",
+    "certificates": null,
+    "disableGateway": false,
+    "natGatewayState": "Disabled",
+    "outboundPublicIPAddresses": null,
+    "apiVersionConstraint": {
+      "minApiVersion": null
+    },
+    "publicIpAddressId": null,
+    "publicNetworkAccess": "Enabled",
+    "privateEndpointConnections": null,
+    "platformVersion": "mtv1"
+  },
+  "sku": {
+    "name": "Consumption",
+    "capacity": 0
+  },
+  "identity": null,
+  "zones": null,
+  "systemData": {
+    "createdBy": "MR367640@fiap.com.br",
+    "createdByType": "User",
+    "createdAt": "2026-10-07T11:35:51.2224486Z",
+    "lastModifiedBy": "MR367640@fiap.com.br",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2026-10-07T11:35:51.2224486Z"
+  },
+  "location": "South Africa North",
+  "tags": {},
+  "id": "/subscriptions/4e0fcff6-a60c-4050-954c-fd47927a60cd/resourceGroups/rg-quantumfinance-mlops/providers/Microsoft.ApiManagement/service/apim-quantumfinance-credit",
+  "name": "apim-quantumfinance-credit",
+  "type": "Microsoft.ApiManagement/service"
+}

@@ -1,0 +1,10 @@
+﻿[
+  {
+    "endpoint_name": "mlw-quantumfinance-credit-ocqjl",
+    "instance_type": "Standard_F2s_v2",
+    "model": "azureml:/subscriptions/4e0fcff6-a60c-4050-954c-fd47927a60cd/resourceGroups/rg-quantumfinance-mlops/providers/Microsoft.MachineLearningServices/workspaces/mlw-quantumfinance-creditscore/models/quantumfinance-credit-score/versions/1",
+    "name": "quantumfinance-credit-score-v9",
+    "provisioning_state": "Succeeded",
+    "type": "managed"
+  }
+]

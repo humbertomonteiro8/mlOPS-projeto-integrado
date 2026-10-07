@@ -1,0 +1,9 @@
+{
+  "id": "/subscriptions/4e0fcff6-a60c-4050-954c-fd47927a60cd/resourceGroups/rg-quantumfinance-mlops/providers/Microsoft.ApiManagement/service/apim-quantumfinance-credit/apis/quantumfinance-credit/policies/policy",
+  "type": "Microsoft.ApiManagement/service/apis/policies",
+  "name": "policy",
+  "properties": {
+    "format": "xml",
+    "value": "<!-- Aplicar na política de entrada da API QuantumFinance no Azure API Management.\r\n     Pré-requisitos: exigir assinatura da API, criar UMA assinatura por parceiro;\r\n     criar Named Value SECRETO 'aml-endpoint-key' com a chave Azure ML, fora do Git.\r\n     A API APIM expõe POST /credit-score/v1/predict e roteia para POST /score.\r\n     Este arquivo NÃO configura recurso Azure sozinho: é um template de política. -->\r\n<policies>\r\n\t<inbound>\r\n\t\t<base />\r\n\t\t<!-- rate-limit é suportado inclusive no plano Consumption e conta POR ASSINATURA. -->\r\n\t\t<rate-limit calls=\"60\" renewal-period=\"60\" remaining-calls-header-name=\"X-RateLimit-Remaining\" total-calls-header-name=\"X-RateLimit-Limit\" />\r\n\t\t<!-- Não repassar credenciais do parceiro ao backend. -->\r\n\t\t<set-header name=\"Ocp-Apim-Subscription-Key\" exists-action=\"delete\" />\r\n\t\t<set-query-parameter name=\"subscription-key\" exists-action=\"delete\" />\r\n\t\t<!-- Named Value: valor contém SOMENTE a chave do endpoint Azure ML. -->\r\n\t\t<set-header name=\"Authorization\" exists-action=\"override\">\r\n\t\t\t<value>Bearer {{aml-endpoint-key}}</value>\r\n\t\t</set-header>\r\n\t\t<set-backend-service base-url=\"https://mlw-quantumfinance-credit-ocqjl.southafricanorth.inference.ml.azure.com\" />\r\n\t\t<rewrite-uri template=\"/score\" copy-unmatched-params=\"false\" />\r\n\t</inbound>\r\n\t<backend>\r\n\t\t<base />\r\n\t</backend>\r\n\t<outbound>\r\n\t\t<base />\r\n\t</outbound>\r\n\t<on-error>\r\n\t\t<base />\r\n\t</on-error>\r\n</policies>"
+  }
+}

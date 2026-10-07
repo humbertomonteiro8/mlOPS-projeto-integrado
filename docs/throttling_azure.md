@@ -1,6 +1,12 @@
-# Configurar throttling no Azure — procedimento a executar
+# Throttling no Azure — configuração e evidência (APIM aplicado)
 
-**Estado atual:** o Managed Online Endpoint `mlw-quantumfinance-credit-ocqjl` exige `Key` e recebe chamadas de teste com `{"predictions":["Good"],"model_version":"1"}`. O deployment `quantumfinance-credit-score-v9` foi configurado no Portal Azure com **100% do tráfego ao vivo** (aba **Detalhes → Atualizar tráfego**). Ainda **não há evidência de limite por parceiro no Azure** (throttling). Este arquivo contém o **plano de configuração**, não prova que os recursos abaixo já existam.
+**Estado atual (aplicado e testado em 07/10/2026):**
+
+- **Managed Online Endpoint** `mlw-quantumfinance-credit-ocqjl` (auth `Key`) respondendo `{"predictions":["Good"],"model_version":"1"}`; deployment `quantumfinance-credit-score-v9` com **100% do tráfego ao vivo** (confirmado também por CLI em [`azure_endpoint_estado.json`](evidencias/azure_endpoint_estado.json) e [`azure_deployments.json`](evidencias/azure_deployments.json)).
+- **Azure API Management (plano Consumption, `southafricanorth`)** criado e configurado: instância `apim-quantumfinance-credit`, gateway `https://apim-quantumfinance-credit.azure-api.net`, API `QuantumFinance Score` (path `credit-score/v1`, **Subscription required**, operação `POST /predict`), Named Value secreto `aml-endpoint-key` (chave Azure ML exclusiva do gateway), política `rate-limit calls="60" renewal-period="60"` por assinatura e assinatura de exemplo `parceiro-exemplo` com scope na API.
+- **Testado com HTTP real no gateway:** sem chave → **401**; chave de assinatura correta → **200** com predição e `X-RateLimit-Limit: 60`; chave errada → **401** ([`apim_teste_http.log`](evidencias/apim_teste_http.log)). Com `calls="3"` temporário e 5 chamadas rápidas: **3× 429** com `Retry-After`; política **restaurada para 60 e validada** ([`apim_teste_throttle.log`](evidencias/apim_teste_throttle.log)). Evidência dos recursos em [`apim_servico.json`](evidencias/apim_servico.json), [`apim_api.json`](evidencias/apim_api.json), [`apim_assinatura.json`](evidencias/apim_assinatura.json), [`apim_namedvalue.json`](evidencias/apim_namedvalue.json) e [`apim_politica.json`](evidencias/apim_politica.json).
+
+As seções abaixo documentam o **procedimento** (portal ou CLI) para reprodução. O teste pode ser repetido com `python tools/testar_apim.py` (401/200/401) e `python tools/testar_throttle_apim.py` (aplica `calls="3"`, dispara chamadas, restaura `calls="60"`).
 
 ## Opção recomendada: Azure API Management (APIM)
 
@@ -33,5 +39,38 @@ curl.exe -X POST 'https://<seu-apim>.azure-api.net/credit-score/v1/predict' `
   -H 'Ocp-Apim-Subscription-Key: <CHAVE_DA_EMPRESA>' `
   --data-binary '@examples/azure_endpoint_input.json'
 ```
+
+### Reprodução e validação (Azure CLI + scripts do repositório)
+
+O ambiente que você viu nesta entrega foi criado/verificado assim (sem segredos no Git):
+
+```powershell
+# Login único e ambiente:
+az login
+az provider register -n Microsoft.ApiManagement   # aguarde ficar 'Registered'
+
+# 1) Instância (Consumption == pago por chamada; valide o custo antes):
+az apim create --name apim-quantumfinance-credit -g rg-quantumfinance-mlops `
+  -l southafricanorth --publisher-email <seu-email> --publisher-name QuantumFinance `
+  --sku-name Consumption
+
+# 2) API + operação:
+az apim api create --service-name apim-quantumfinance-credit -g rg-quantumfinance-mlops `
+  --api-id quantumfinance-credit --path '/credit-score/v1' --display-name 'QuantumFinance Score' `
+  --service-url https://mlw-quantumfinance-credit-ocqjl.southafricanorth.inference.ml.azure.com `
+  --subscription-required true --protocols https
+az apim api operation create -g rg-quantumfinance-mlops --service-name apim-quantumfinance-credit `
+  --api-id quantumfinance-credit --operation-id predict --url-template '/predict' `
+  --method POST --display-name 'Predict'
+
+# 3) Named Value secreto (chave Azure ML): use PUT ARM com corpo em arquivo e
+#    header If-Match '*' (o valor não passa na linha de comando). Nunca commite a chave.
+```
+
+- **Política e assinatura:** `az rest`/`Invoke-RestMethod` com token `az account get-access-token --resource https://management.azure.com`, `PUT .../apis/quantumfinance-credit/policies/policy?api-version=2022-08-01` (formato `rawxml`, corpo gerado a partir de `deploy/apim-policy.xml`) e `PUT .../subscriptions/parceiro-exemplo?api-version=2022-08-01` com `scope` restrito à API. Atualizações de recurso existente exigem o header `If-Match: *`.
+- **Tirar a prova (scripts incluídos no ZIP):**
+  - `python tools/testar_apim.py` — com `QF_APIM_GATEWAY` e `QF_APIM_SUB_KEY` definidos, testa 401 (sem chave) / 200 (chave correta, mostra `X-RateLimit-Limit`) / 401 (chave errada).
+  - `python tools/testar_throttle_apim.py` — aplica `calls="3"` temporário, dispara 5 chamadas (recupera **429** com `Retry-After`), **restaura `calls="60"`** e valida o conteúdo da política.
+- **Estado atual dos recursos** e os resultados de cada teste estão em `docs/evidencias/apim_*.json`, `apim_teste_http.log` e `apim_teste_throttle.log`.
 
 **Referências Microsoft:** [rate-limit por assinatura (suporta Consumption)](https://learn.microsoft.com/azure/api-management/rate-limit-policy), [matriz de políticas por plano](https://learn.microsoft.com/azure/api-management/api-management-policies), [criar assinaturas](https://learn.microsoft.com/azure/api-management/api-management-howto-create-subscriptions), [segurança da rede Azure ML](https://learn.microsoft.com/azure/machine-learning/how-to-secure-online-endpoint?view=azureml-api-2), [custos APIM](https://learn.microsoft.com/azure/api-management/plan-manage-costs).

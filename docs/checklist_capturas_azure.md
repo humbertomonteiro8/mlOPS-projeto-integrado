@@ -1,6 +1,6 @@
 # Checklist — Capturas do Portal Azure (entrega 4: "nuvem com imagens")
 
-**Estado: núcleo capturado ✅** (5 telas em `docs/evidencias/`). O endpoint `mlw-quantumfinance-credit-ocqjl` está com o deployment `quantumfinance-credit-score-v9` em **100% do tráfego ao vivo** (configurado no portal). A camada APIM (throttling por parceiro na nuvem) segue **pendente/opcional**, conforme abaixo.
+**Estado: núcleo capturado ✅ e camada APIM aplicada e evidenciada** (07/10/2026). O endpoint `mlw-quantumfinance-credit-ocqjl` está com `quantumfinance-credit-score-v9` em **100% do tráfego ao vivo**. O **Azure API Management** foi criado e configurado via CLI (`apim-quantumfinance-credit`, plano Consumption, mesma região), com política `rate-limit` por assinatura e um **429 real** demonstrado. As evidências programáticas estão nos JSONs/logs `docs/evidencias/apim_*.json`, `apim_teste_http.log` e `apim_teste_throttle.log`. As **capturas do portal (telas 7–11) continuam opcionais**: os recursos existem, então podem ser fotografadas se o professor pedir imagens do portal, mas não são mais necessárias para provar a entrega.
 
 ## Regras de privacidade (obrigatórias)
 
@@ -28,9 +28,9 @@
 
 > A captura 3 prova o roteamento; a 5 prova a autenticação por chave; a 6 prova o consumo real. A captura 4 mostra qual deployment atende (v9).
 
-## Governança: camada APIM (pendente, recomendada se o professor verificar throttling na nuvem)
+## Governança: camada APIM (aplicada via CLI — capturas opcionais)
 
-O passo a passo completo está em [`docs/throttling_azure.md`](throttling_azure.md) e o template de política em [`deploy/apim-policy.xml`](../deploy/apim-policy.xml). Só capture depois que os recursos existirem de verdade (criação de APIM é manual e pode ter custo).
+A instância `apim-quantumfinance-credit`, a API, o Named Value, a política `rate-limit` e a assinatura `parceiro-exemplo` **já existem** e foram testados (ver [`docs/throttling_azure.md`](throttling_azure.md)). A prova atual é programática (JSONs/logs em `docs/evidencias/`). Se o professor exigir imagens do portal, capture a partir do **Portal Azure → API Management → apim-quantumfinance-credit**; caso contrário, estas cinco telas não são obrigatórias. Regras: chaves de assinatura sempre **mascaradas**; corpo de teste `examples/azure_endpoint_input.json` (sem PII).
 
 | # | Tela a capturar | Caminho no portal | O que deve aparecer | Arquivo em `docs/evidencias/` |
 |---|---|---|---|---|

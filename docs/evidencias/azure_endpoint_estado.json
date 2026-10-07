@@ -1,0 +1,29 @@
+﻿{
+  "auth_mode": "key",
+  "id": "/subscriptions/4e0fcff6-a60c-4050-954c-fd47927a60cd/resourceGroups/rg-quantumfinance-mlops/providers/Microsoft.MachineLearningServices/workspaces/mlw-quantumfinance-creditscore/onlineEndpoints/mlw-quantumfinance-credit-ocqjl",
+  "identity": {
+    "principal_id": "cf6cdd5b-e89a-42e9-b825-e316f78d5ac7",
+    "tenant_id": "11dbbfe2-89b8-4549-be10-cec364e59551",
+    "type": "system_assigned"
+  },
+  "kind": "Managed",
+  "location": "southafricanorth",
+  "mirror_traffic": {},
+  "name": "mlw-quantumfinance-credit-ocqjl",
+  "openapi_uri": "https://mlw-quantumfinance-credit-ocqjl.southafricanorth.inference.ml.azure.com/swagger.json",
+  "properties": {
+    "AzureAsyncOperationUri": "https://management.azure.com/subscriptions/4e0fcff6-a60c-4050-954c-fd47927a60cd/providers/Microsoft.MachineLearningServices/locations/southafricanorth/mfeOperationsStatus/oeidp:7338f4a7-2ebe-4ad8-b221-cf7102625476:1793ae49-ab42-4326-ba63-ae578562f576?api-version=2022-02-01-preview",
+    "azureml.onlineendpointid": "/subscriptions/4e0fcff6-a60c-4050-954c-fd47927a60cd/resourcegroups/rg-quantumfinance-mlops/providers/microsoft.machinelearningservices/workspaces/mlw-quantumfinance-creditscore/onlineendpoints/mlw-quantumfinance-credit-ocqjl",
+    "createdAt": "2026-10-06T10:55:36.466390+0000",
+    "createdBy": "HUMBERTO MONTEIRO DA CRUZ",
+    "lastModifiedAt": "2026-10-07T00:36:29.345826+0000"
+  },
+  "provisioning_state": "Succeeded",
+  "public_network_access": "enabled",
+  "resourceGroup": "rg-quantumfinance-mlops",
+  "scoring_uri": "https://mlw-quantumfinance-credit-ocqjl.southafricanorth.inference.ml.azure.com/score",
+  "tags": {},
+  "traffic": {
+    "quantumfinance-credit-score-v9": 100
+  }
+}

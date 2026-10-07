@@ -24,7 +24,7 @@ FILES = [
     "src/predict.py", "src/api.py", "tests/test_project.py", "tools/package.py",
     "tools/setup_local.py", "tools/seed_registry.py", "tools/export_model.py",
     "tools/gerar_demo_csv.py", "tools/validate_local.py", "tools/gerar_evidencias.py",
-    "tools/gerar_notebook.py",
+    "tools/gerar_notebook.py", "tools/testar_apim.py", "tools/testar_throttle_apim.py",
 ]
 # Logs de conexão gerados por notebooks/execucao_api.ipynb: entram se existirem.
 # Capturas do portal Azure (docs/checklist_capturas_azure.md): somente se capturadas.
@@ -41,6 +41,15 @@ OPTIONAL = {
     "docs/evidencias/apim_03_politica_rate_limit.png",
     "docs/evidencias/apim_04_subscriptions.png",
     "docs/evidencias/apim_05_teste_429.png",
+    "docs/evidencias/azure_endpoint_estado.json",
+    "docs/evidencias/azure_deployments.json",
+    "docs/evidencias/apim_servico.json",
+    "docs/evidencias/apim_api.json",
+    "docs/evidencias/apim_assinatura.json",
+    "docs/evidencias/apim_namedvalue.json",
+    "docs/evidencias/apim_politica.json",
+    "docs/evidencias/apim_teste_http.log",
+    "docs/evidencias/apim_teste_throttle.log",
 }
 
 

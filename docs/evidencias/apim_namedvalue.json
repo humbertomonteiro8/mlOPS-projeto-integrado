@@ -1,0 +1,11 @@
+{
+  "id": "/subscriptions/4e0fcff6-a60c-4050-954c-fd47927a60cd/resourceGroups/rg-quantumfinance-mlops/providers/Microsoft.ApiManagement/service/apim-quantumfinance-credit/namedValues/aml-endpoint-key",
+  "type": "Microsoft.ApiManagement/service/namedValues",
+  "name": "aml-endpoint-key",
+  "properties": {
+    "displayName": "aml-endpoint-key",
+    "tags": null,
+    "secret": true,
+    "provisioningState": "Succeeded"
+  }
+}
