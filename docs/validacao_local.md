@@ -40,7 +40,7 @@ Resposta da primeira chamada válida, com o corpo de `examples/cliente.json`:
 {"credit_score_predicted":"Good","model_version":"1","request_id":"teste-local"}
 ```
 
-O servidor do teste foi encerrado ao final. O resultado demonstra **o fluxo local**: treino → promoção → carregamento por versão Production → API com chave e throttling. Não demonstra que o endpoint Azure possua esse throttling; veja `docs/throttling_azure.md` para o procedimento ainda pendente de implantação.
+O servidor do teste foi encerrado ao final. O resultado demonstra **o fluxo local**: treino → promoção → carregamento por versão Production → API com chave e throttling. O endpoint Azure ML bruto não recebe throttling deste fluxo; para limite por parceiro **na nuvem**, o **Azure API Management** foi aplicado e testado com **429 real** — veja [docs/throttling_azure.md](throttling_azure.md) e as evidências em `docs/evidencias/apim_teste_http.log` e `apim_teste_throttle.log`.
 
 ## Capturas e logs salvos (pasta `docs/evidencias/`)
 

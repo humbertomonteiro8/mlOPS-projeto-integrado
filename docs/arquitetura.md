@@ -20,7 +20,7 @@ quantumfinance-credit-score/
 ├── models/
 │   ├── README.md            # explica o modelo embalado e o Registry
 │   └── credit-score-v1/     # v1 promovida, autocontida; entra só no ZIP
-├── deploy/apim-policy.xml   # template de throttling Azure (aplicar manualmente)
+├── deploy/apim-policy.xml   # política rate-limit APLICADA no APIM (docs/throttling_azure.md)
 ├── src/
 │   ├── features.py          # limpeza/engenharia; Pipeline fit apenas no treino
 │   ├── registry.py          # mesmo MLflow para treino e inferência
@@ -42,7 +42,7 @@ quantumfinance-credit-score/
 │   ├── validacao_local.md   # métricas e 200/401/429 observados na API local
 │   ├── checklist_capturas_azure.md  # capturas do portal: caminho, arquivo e privacidade
 │   ├── evidencias/          # capturas PNG, log/JSON do consumo real + logs do notebook
-│   └── throttling_azure.md  # passo a passo APIM, ainda não implantado
+│   └── throttling_azure.md  # limitação por parceiro no APIM (aplicado e testado com 429)
 └── mlruns/                  # gerado em execução, fora do Git/ZIP
 ```
 
