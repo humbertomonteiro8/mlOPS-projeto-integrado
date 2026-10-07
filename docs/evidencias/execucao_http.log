@@ -1,0 +1,23 @@
+QuantumFinance | evidência de consumo HTTP real | 2026-10-07T01:51:46+00:00
+Chaves omitidas; payload: examples/cliente.json; API local (NÃO Azure).
+
+> GET /credit-score/v1/health | X-API-Key: nenhuma
+< HTTP 200 | headers: {"content-type": "application/json", "x-request-id": "453524aa-ad22-4c16-bcec-267dc8dff713"}
+< body: {"status": "ok"}
+
+> POST /credit-score/v1/predict | X-API-Key: nenhuma
+< HTTP 401 | headers: {"content-type": "application/json", "x-request-id": "evidencia-401"}
+< body: {"error": {"code": "invalid_api_key", "message": "X-API-Key ausente ou inválida.", "request_id": "evidencia-401"}}
+
+> POST /credit-score/v1/predict | X-API-Key: <omitida>
+< HTTP 200 | headers: {"content-type": "application/json", "x-request-id": "evidencia-200", "x-ratelimit-limit": "2", "x-ratelimit-remaining": "1"}
+< body: {"credit_score_predicted": "Good", "model_version": "1", "request_id": "evidencia-200"}
+
+> POST /credit-score/v1/predict | X-API-Key: <omitida>
+< HTTP 200 | headers: {"content-type": "application/json", "x-request-id": "evidencia-200b", "x-ratelimit-limit": "2", "x-ratelimit-remaining": "0"}
+< body: {"credit_score_predicted": "Good", "model_version": "1", "request_id": "evidencia-200b"}
+
+> POST /credit-score/v1/predict | X-API-Key: <omitida>
+< HTTP 429 | headers: {"content-type": "application/json", "x-request-id": "evidencia-429", "retry-after": "58"}
+< body: {"error": {"code": "rate_limit_exceeded", "message": "Limite de chamadas excedido.", "request_id": "evidencia-429"}}
+

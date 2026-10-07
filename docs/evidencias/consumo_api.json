@@ -1,0 +1,95 @@
+{
+  "gerado_em_utc": "2026-10-07T01:51:46+00:00",
+  "origem": "HTTP real via httpx + uvicorn em 127.0.0.1",
+  "payload": "examples/cliente.json (sem PII)",
+  "limite_apenas_no_teste": "2/min por chave; padrão da API 60/min + 10/s",
+  "requisicoes": [
+    {
+      "teste": "Health (liveness)",
+      "metodo": "GET",
+      "rota": "/credit-score/v1/health",
+      "credencial_enviada": "nenhuma",
+      "status_http": 200,
+      "headers_resposta": {
+        "content-type": "application/json",
+        "x-request-id": "453524aa-ad22-4c16-bcec-267dc8dff713"
+      },
+      "corpo_resposta": {
+        "status": "ok"
+      }
+    },
+    {
+      "teste": "Sem chave",
+      "metodo": "POST",
+      "rota": "/credit-score/v1/predict",
+      "credencial_enviada": "nenhuma",
+      "status_http": 401,
+      "headers_resposta": {
+        "content-type": "application/json",
+        "x-request-id": "evidencia-401"
+      },
+      "corpo_resposta": {
+        "error": {
+          "code": "invalid_api_key",
+          "message": "X-API-Key ausente ou inválida.",
+          "request_id": "evidencia-401"
+        }
+      }
+    },
+    {
+      "teste": "Com chave válida",
+      "metodo": "POST",
+      "rota": "/credit-score/v1/predict",
+      "credencial_enviada": "<omitida>",
+      "status_http": 200,
+      "headers_resposta": {
+        "content-type": "application/json",
+        "x-request-id": "evidencia-200",
+        "x-ratelimit-limit": "2",
+        "x-ratelimit-remaining": "1"
+      },
+      "corpo_resposta": {
+        "credit_score_predicted": "Good",
+        "model_version": "1",
+        "request_id": "evidencia-200"
+      }
+    },
+    {
+      "teste": "Segunda chamada com chave",
+      "metodo": "POST",
+      "rota": "/credit-score/v1/predict",
+      "credencial_enviada": "<omitida>",
+      "status_http": 200,
+      "headers_resposta": {
+        "content-type": "application/json",
+        "x-request-id": "evidencia-200b",
+        "x-ratelimit-limit": "2",
+        "x-ratelimit-remaining": "0"
+      },
+      "corpo_resposta": {
+        "credit_score_predicted": "Good",
+        "model_version": "1",
+        "request_id": "evidencia-200b"
+      }
+    },
+    {
+      "teste": "Terceira chamada com chave (limite 2/min)",
+      "metodo": "POST",
+      "rota": "/credit-score/v1/predict",
+      "credencial_enviada": "<omitida>",
+      "status_http": 429,
+      "headers_resposta": {
+        "content-type": "application/json",
+        "x-request-id": "evidencia-429",
+        "retry-after": "58"
+      },
+      "corpo_resposta": {
+        "error": {
+          "code": "rate_limit_exceeded",
+          "message": "Limite de chamadas excedido.",
+          "request_id": "evidencia-429"
+        }
+      }
+    }
+  ]
+}

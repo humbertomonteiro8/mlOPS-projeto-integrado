@@ -1,0 +1,12 @@
+# Python 3.11 recomendado; versões validadas juntas para registro/predição MLflow.
+mlflow==2.22.1
+numpy==1.26.4
+pandas==2.2.3
+scikit-learn==1.6.1
+xgboost==2.1.4
+lightgbm==4.6.0
+fastapi==0.115.12
+uvicorn==0.34.2
+pydantic==2.11.4
+httpx==0.28.1
+pytest==8.3.5

@@ -1,0 +1,4 @@
+# Modelos
+
+- **`credit-score-v1/`**: modelo embalado **fora do `mlruns`** para tornar o pacote utilizável em qualquer máquina sem dataset/treino. É o Pipeline XGBoost promovido como `Production` v1 pelo treino completo no dataset da disciplina (`docs/validacao_local.md`). Não contém dados pessoais: foi treinado apenas com features. `tools/export_model.py` o reexporta a partir do Production atual; `tools/seed_registry.py` o registra como `Production` em um Registry local vazio.
+- O diretório **não vai para o Git** (apenas para o ZIP), pois é um artefato binário; todo o ciclo de treino registra o Pipeline no MLflow Model Registry (`quantumfinance-credit-score`), com o modelo gerido por versões/estágios (`Production`, `Archived`).

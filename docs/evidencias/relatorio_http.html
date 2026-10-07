@@ -1,0 +1,36 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><title>Evidências HTTP - QuantumFinance</title>
+<style>body{font:16px Segoe UI,Arial,sans-serif;background:#f5f7fb;color:#17263c;margin:30px auto;width:1250px}
+h1{color:#075cb0}section{display:inline-block;vertical-align:top;background:white;border:1px solid #ccd9eb;
+border-radius:8px;width:575px;min-height:140px;padding:14px;margin:6px}section h2{font-size:19px;margin:0 0 8px}
+pre{white-space:pre-wrap;color:#003b75;background:#eff6ff;padding:9px;border-radius:5px}small{overflow-wrap:anywhere}
+footer{margin-top:15px;color:#465c72}</style>
+<h1>QuantumFinance — consumo REAL da API local</h1>
+<p>HTTP para uvicorn em 127.0.0.1, 2026-10-07T01:51:46+00:00 · sem chaves nem PII · body: examples/cliente.json</p>
+<section><h2>Health (liveness) · HTTP 200</h2><p>GET /credit-score/v1/health — X-API-Key: nenhuma</p><pre>{
+  &quot;status&quot;: &quot;ok&quot;
+}</pre><small>{&quot;content-type&quot;: &quot;application/json&quot;, &quot;x-request-id&quot;: &quot;453524aa-ad22-4c16-bcec-267dc8dff713&quot;}</small></section>
+<section><h2>Sem chave · HTTP 401</h2><p>POST /credit-score/v1/predict — X-API-Key: nenhuma</p><pre>{
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;invalid_api_key&quot;,
+    &quot;message&quot;: &quot;X-API-Key ausente ou inválida.&quot;,
+    &quot;request_id&quot;: &quot;evidencia-401&quot;
+  }
+}</pre><small>{&quot;content-type&quot;: &quot;application/json&quot;, &quot;x-request-id&quot;: &quot;evidencia-401&quot;}</small></section>
+<section><h2>Com chave válida · HTTP 200</h2><p>POST /credit-score/v1/predict — X-API-Key: &lt;omitida&gt;</p><pre>{
+  &quot;credit_score_predicted&quot;: &quot;Good&quot;,
+  &quot;model_version&quot;: &quot;1&quot;,
+  &quot;request_id&quot;: &quot;evidencia-200&quot;
+}</pre><small>{&quot;content-type&quot;: &quot;application/json&quot;, &quot;x-request-id&quot;: &quot;evidencia-200&quot;, &quot;x-ratelimit-limit&quot;: &quot;2&quot;, &quot;x-ratelimit-remaining&quot;: &quot;1&quot;}</small></section>
+<section><h2>Segunda chamada com chave · HTTP 200</h2><p>POST /credit-score/v1/predict — X-API-Key: &lt;omitida&gt;</p><pre>{
+  &quot;credit_score_predicted&quot;: &quot;Good&quot;,
+  &quot;model_version&quot;: &quot;1&quot;,
+  &quot;request_id&quot;: &quot;evidencia-200b&quot;
+}</pre><small>{&quot;content-type&quot;: &quot;application/json&quot;, &quot;x-request-id&quot;: &quot;evidencia-200b&quot;, &quot;x-ratelimit-limit&quot;: &quot;2&quot;, &quot;x-ratelimit-remaining&quot;: &quot;0&quot;}</small></section>
+<section><h2>Terceira chamada com chave (limite 2/min) · HTTP 429</h2><p>POST /credit-score/v1/predict — X-API-Key: &lt;omitida&gt;</p><pre>{
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;rate_limit_exceeded&quot;,
+    &quot;message&quot;: &quot;Limite de chamadas excedido.&quot;,
+    &quot;request_id&quot;: &quot;evidencia-429&quot;
+  }
+}</pre><small>{&quot;content-type&quot;: &quot;application/json&quot;, &quot;x-request-id&quot;: &quot;evidencia-429&quot;, &quot;retry-after&quot;: &quot;58&quot;}</small></section><footer>Esta é uma captura de um relatório HTML gerado A PARTIR das respostas HTTP salvas em consumo_api.json.
+Não é screenshot de Azure, Swagger ou console de desenvolvedor.</footer></html>

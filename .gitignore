@@ -1,0 +1,22 @@
+.venv/
+__pycache__/
+.pytest_cache/
+mlruns/
+.env
+*.pyc
+*.pkl
+*.joblib
+# Artefato de build regenerável (tools/package.py). Os arquivos CORRETOS de
+# entrega dos artefatos binários estão dentro do ZIP, fora do Git.
+QuantumFinance_MLOps_Entrega.zip
+# Qualquer CSV real (o dataset da disciplina tem PII) fica fora do Git.
+# As negociações de arquivos sintéticos/docs ficam DEPOIS das regras amplas.
+*.csv
+*.csv.zip
+data/raw/*
+data/processed/*
+!data/raw/README.md
+!data/raw/demo_train.csv
+!data/processed/README.md
+# Modelo embalado é artefato binário: entra apenas no ZIP, não no Git.
+models/credit-score-v1/

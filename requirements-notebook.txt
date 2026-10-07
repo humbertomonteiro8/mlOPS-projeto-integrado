@@ -1,0 +1,7 @@
+# Opcional: ferramentas para REexecutar/editar o notebook de demonstração
+# notebooks/execucao_api.ipynb. O pacote principal usa apenas requirements.txt.
+nbformat>=5.10
+nbclient>=0.10
+nbconvert>=7.16
+ipykernel>=6.29
+jupyter_client>=8.6
