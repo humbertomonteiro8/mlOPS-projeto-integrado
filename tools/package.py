@@ -13,7 +13,8 @@ DEST = ROOT / "QuantumFinance_MLOps_Entrega.zip"
 FILES = [
     ".gitignore", ".env.example", "README.md", "requirements.txt",
     "requirements-notebook.txt",
-    "docs/arquitetura.md", "docs/api.md", "docs/validacao_local.md", "docs/throttling_azure.md", "deploy/apim-policy.xml",
+    "docs/arquitetura.md", "docs/api.md", "docs/validacao_local.md", "docs/throttling_azure.md",
+    "docs/checklist_capturas_azure.md", "deploy/apim-policy.xml",
     "docs/evidencias/captura_respostas_http.png", "docs/evidencias/captura_swagger_local.png",
     "docs/evidencias/execucao_http.log", "docs/evidencias/consumo_api.json", "docs/evidencias/relatorio_http.html",
     "examples/cliente.json", "examples/azure_endpoint_input.json",
@@ -26,9 +27,21 @@ FILES = [
     "tools/gerar_notebook.py",
 ]
 # Logs de conexão gerados por notebooks/execucao_api.ipynb: entram se existirem.
+# Capturas do portal Azure (docs/checklist_capturas_azure.md): somente se capturadas.
 OPTIONAL = {
     "docs/evidencias/execucao_api_principal.log",
     "docs/evidencias/execucao_api_sem_modelo.log",
+    "docs/evidencias/azure_01_endpoint_lista.png",
+    "docs/evidencias/azure_02_endpoint_detalhes.png",
+    "docs/evidencias/azure_03_trafego_100_v9.png",
+    "docs/evidencias/azure_04_deployments.png",
+    "docs/evidencias/azure_05_consumir_key.png",
+    "docs/evidencias/azure_06_testar_resposta.png",
+    "docs/evidencias/apim_01_overview.png",
+    "docs/evidencias/apim_02_api_criada.png",
+    "docs/evidencias/apim_03_politica_rate_limit.png",
+    "docs/evidencias/apim_04_subscriptions.png",
+    "docs/evidencias/apim_05_teste_429.png",
 }
 
 

@@ -1,0 +1,47 @@
+# Checklist — Capturas do Portal Azure (entrega 4: "nuvem com imagens")
+
+**Estado: aguardando suas capturas.** O endpoint `mlw-quantumfinance-credit-ocqjl` está com o deployment `quantumfinance-credit-score-v9` em **100% do tráfego ao vivo** (já configurado no portal). Estas capturas são sua evidência de consumo/governança na nuvem.
+
+## Regras de privacidade (obrigatórias)
+
+- **Nunca** mostre a chave (primária/secundária) do endpoint, da assinatura APIM nem tokens. Em telas que exibem chave (ex.: **Consumir**), **recorte ou desfoque** o valor e deixe apenas o rótulo (`Chave primária`, `Chave secundária`) e o modo `Key`.
+- Não capture telas com dados pessoais. O body de teste é `examples/azure_endpoint_input.json` (sem `SSN`/`Name`/`Customer_ID`).
+- Nome dos arquivos: **somente ASCII**, extensão `.png`, dentro de `docs/evidencias/`.
+- Se algum passo não existir na sua assinatura (ex.: APIM), **não invente**: registre "não aplicável" aqui e ajuste a documentação em vez de deixar evidência falsa.
+
+## Como capturar
+
+1. Entre no **Azure ML Studio** com a conta dona do workspace `mlw-quantumfinance-credit-ocqjl`.
+2. Siga a tabela abaixo; salve cada tela com o nome indicado.
+3. Depois de capturar, rode `tools/package.py` (o ZIP já inclui as novas PNGs) e faça um commit.
+
+## Núcleo (obrigatório para a entrega 4)
+
+| # | Tela a capturar | Caminho no portal | O que deve aparecer | Arquivo em `docs/evidencias/` |
+|---|---|---|---|---|
+| 1 | Lista de endpoints | Azure ML Studio → **Pontos de extremidade** | O cartão do endpoint `mlw-quantumfinance-credit-ocqjl` com estado **Healthy** e tipo Managed online endpoint | `azure_01_endpoint_lista.png` |
+| 2 | Detalhes do endpoint | Endpoint → aba **Detalhes** | Estado do endpoint, URI de consumo, deployment destacado | `azure_02_endpoint_detalhes.png` |
+| 3 | Tráfego ao vivo: 100% para v9 | Endpoint → **Detalhes → Atualizar tráfego** | Barra/porcentagem: `quantumfinance-credit-score-v9 = 100%` (e demais em 0) | `azure_03_trafego_100_v9.png` |
+| 4 | Deployments | Endpoint → aba **Deployments** (ou **Em implantação**) | v9 com estado **Healthy**, instância/CPU/região | `azure_04_deployments.png` |
+| 5 | Consumir (auth Key) | Endpoint → aba **Consumir** | Endpoint URI, modo de autenticação **`Key`**; chaves **mascaradas** | `azure_05_consumir_key.png` |
+| 6 | Testar (resposta real) | Endpoint → aba **Testar**, `quantumfinance-credit-score-v9`, input `examples/azure_endpoint_input.json` | Resposta `{"predictions":["Good"],"model_version":"1"}` (ou equivalente) | `azure_06_testar_resposta.png` |
+
+> A captura 3 é a prova do roteamento; a 5 prova a autenticação por chave; a 6 prova o consumo real. A captura 4 mostra qual deployment atende (v9).
+
+## Governança: camada APIM (recomendada se o professor verificar throttling na nuvem)
+
+O passo a passo completo está em [`docs/throttling_azure.md`](throttling_azure.md) e o template de política em [`deploy/apim-policy.xml`](../deploy/apim-policy.xml). Só capture depois que os recursos existirem de verdade.
+
+| # | Tela a capturar | Caminho no portal | O que deve aparecer | Arquivo em `docs/evidencias/` |
+|---|---|---|---|---|
+| 7 | Instância APIM | Portal → **API Management** → sua instância → **Visão geral** | Instância criada, nome/região/SKU | `apim_01_overview.png` |
+| 8 | API criada | APIM → **APIs** | `QuantumFinance Score` com operação **POST /predict** | `apim_02_api_criada.png` |
+| 9 | Política rate-limit | API → **All operations → Inbound processing → Code editor** | `<rate-limit calls="60" renewal-period="60" ...>` (conforme `deploy/apim-policy.xml`) | `apim_03_politica_rate_limit.png` |
+| 10 | Assinatura por parceiro | APIM → **Subscriptions** | Uma assinatura com scope na API QuantumFinance (chave **mascarada**) | `apim_04_subscriptions.png` |
+| 11 | Teste de 429 | Postman/`curl` → gateway APIM `.../credit-score/v1/predict` | Com `calls="3"` temporário: a 4ª chamada retorna **429** (retorne a política a 60 depois) | `apim_05_teste_429.png` |
+
+## Depois de capturar
+
+1. `.\\.venv\\Scripts\\python.exe tools\\package.py` — regenera `QuantumFinance_MLOps_Entrega.zip` com as novas PNGs.
+2. Commit: `git add docs/evidencias/ && git commit -m "Evidências do portal Azure (tráfego 100% v9, auth Key, resposta real)"`.
+3. (Opcional) Atualize o parágrafo "Segurança na nuvem" de [`docs/api.md`](api.md) somente se o APIM tiver sido aplicado e testado com 429 real.

@@ -40,6 +40,7 @@ quantumfinance-credit-score/
 │   ├── arquitetura.md       # entregável 1
 │   ├── api.md               # entregável 4
 │   ├── validacao_local.md   # métricas e 200/401/429 observados na API local
+│   ├── checklist_capturas_azure.md  # capturas do portal: caminho, arquivo e privacidade
 │   ├── evidencias/          # capturas PNG, log/JSON do consumo real + logs do notebook
 │   └── throttling_azure.md  # passo a passo APIM, ainda não implantado
 └── mlruns/                  # gerado em execução, fora do Git/ZIP
