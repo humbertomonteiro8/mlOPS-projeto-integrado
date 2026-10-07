@@ -1,6 +1,6 @@
 # Checklist — Capturas do Portal Azure (entrega 4: "nuvem com imagens")
 
-**Estado: aguardando suas capturas.** O endpoint `mlw-quantumfinance-credit-ocqjl` está com o deployment `quantumfinance-credit-score-v9` em **100% do tráfego ao vivo** (já configurado no portal). Estas capturas são sua evidência de consumo/governança na nuvem.
+**Estado: núcleo capturado ✅** (5 telas em `docs/evidencias/`). O endpoint `mlw-quantumfinance-credit-ocqjl` está com o deployment `quantumfinance-credit-score-v9` em **100% do tráfego ao vivo** (configurado no portal). A camada APIM (throttling por parceiro na nuvem) segue **pendente/opcional**, conforme abaixo.
 
 ## Regras de privacidade (obrigatórias)
 
@@ -15,22 +15,22 @@
 2. Siga a tabela abaixo; salve cada tela com o nome indicado.
 3. Depois de capturar, rode `tools/package.py` (o ZIP já inclui as novas PNGs) e faça um commit.
 
-## Núcleo (obrigatório para a entrega 4)
+## Núcleo (capturado)
 
 | # | Tela a capturar | Caminho no portal | O que deve aparecer | Arquivo em `docs/evidencias/` |
 |---|---|---|---|---|
-| 1 | Lista de endpoints | Azure ML Studio → **Pontos de extremidade** | O cartão do endpoint `mlw-quantumfinance-credit-ocqjl` com estado **Healthy** e tipo Managed online endpoint | `azure_01_endpoint_lista.png` |
-| 2 | Detalhes do endpoint | Endpoint → aba **Detalhes** | Estado do endpoint, URI de consumo, deployment destacado | `azure_02_endpoint_detalhes.png` |
-| 3 | Tráfego ao vivo: 100% para v9 | Endpoint → **Detalhes → Atualizar tráfego** | Barra/porcentagem: `quantumfinance-credit-score-v9 = 100%` (e demais em 0) | `azure_03_trafego_100_v9.png` |
-| 4 | Deployments | Endpoint → aba **Deployments** (ou **Em implantação**) | v9 com estado **Healthy**, instância/CPU/região | `azure_04_deployments.png` |
-| 5 | Consumir (auth Key) | Endpoint → aba **Consumir** | Endpoint URI, modo de autenticação **`Key`**; chaves **mascaradas** | `azure_05_consumir_key.png` |
-| 6 | Testar (resposta real) | Endpoint → aba **Testar**, `quantumfinance-credit-score-v9`, input `examples/azure_endpoint_input.json` | Resposta `{"predictions":["Good"],"model_version":"1"}` (ou equivalente) | `azure_06_testar_resposta.png` |
+| 1 | Lista de endpoints | Azure ML Studio → **Pontos de extremidade** | O cartão do endpoint `mlw-quantumfinance-credit-ocqjl` com estado **Healthy** e tipo Managed online endpoint | `captura_pontos_de_extremidade.png` |
+| 2 | Detalhes do endpoint | Endpoint → aba **Detalhes** | Estado do endpoint, URI de consumo, deployment destacado | coberto por `captura_pontos_de_extremidade.png` (item 1); tela separada opcional |
+| 3 | Tráfego ao vivo: 100% para v9 | Endpoint → **Detalhes → Atualizar tráfego** | Barra/porcentagem: `quantumfinance-credit-score-v9 = 100%` (e demais em 0) | `captura_trafego_100_porcento.png` |
+| 4 | Deployments | Endpoint → aba **Deployments** (ou **Em implantação**) | v9 com estado **Healthy**, instância/CPU/região | `captura_deployments.png` |
+| 5 | Consumir (auth Key) | Endpoint → aba **Consumir** | Endpoint URI, modo de autenticação **`Key`**; chaves **mascaradas** | `captura_consumir.png` |
+| 6 | Testar (resposta real) | Endpoint → aba **Testar**, `quantumfinance-credit-score-v9`, input `examples/azure_endpoint_input.json` | Resposta `{"predictions":["Good"],"model_version":"1"}` (ou equivalente) | `captura_testar.png` |
 
-> A captura 3 é a prova do roteamento; a 5 prova a autenticação por chave; a 6 prova o consumo real. A captura 4 mostra qual deployment atende (v9).
+> A captura 3 prova o roteamento; a 5 prova a autenticação por chave; a 6 prova o consumo real. A captura 4 mostra qual deployment atende (v9).
 
-## Governança: camada APIM (recomendada se o professor verificar throttling na nuvem)
+## Governança: camada APIM (pendente, recomendada se o professor verificar throttling na nuvem)
 
-O passo a passo completo está em [`docs/throttling_azure.md`](throttling_azure.md) e o template de política em [`deploy/apim-policy.xml`](../deploy/apim-policy.xml). Só capture depois que os recursos existirem de verdade.
+O passo a passo completo está em [`docs/throttling_azure.md`](throttling_azure.md) e o template de política em [`deploy/apim-policy.xml`](../deploy/apim-policy.xml). Só capture depois que os recursos existirem de verdade (criação de APIM é manual e pode ter custo).
 
 | # | Tela a capturar | Caminho no portal | O que deve aparecer | Arquivo em `docs/evidencias/` |
 |---|---|---|---|---|
