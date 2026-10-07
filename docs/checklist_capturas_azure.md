@@ -1,6 +1,6 @@
 # Checklist — Capturas do Portal Azure (entrega 4: "nuvem com imagens")
 
-**Estado: núcleo capturado ✅ e camada APIM aplicada e evidenciada** (07/10/2026). O endpoint `mlw-quantumfinance-credit-ocqjl` está com `quantumfinance-credit-score-v9` em **100% do tráfego ao vivo**. O **Azure API Management** foi criado e configurado via CLI (`apim-quantumfinance-credit`, plano Consumption, mesma região), com política `rate-limit` por assinatura e um **429 real** demonstrado. As evidências programáticas estão nos JSONs/logs `docs/evidencias/apim_*.json`, `apim_teste_http.log` e `apim_teste_throttle.log`. As **capturas do portal (telas 7–11) continuam opcionais**: os recursos existem, então podem ser fotografadas se o professor pedir imagens do portal, mas não são mais necessárias para provar a entrega.
+**Estado: núcleo capturado ✅ e camada APIM aplicada e evidenciada** (07/10/2026). O endpoint `mlw-quantumfinance-credit-ocqjl` está com `quantumfinance-credit-score-v9` em **100% do tráfego ao vivo**. O **Azure API Management** foi criado e configurado via CLI (`apim-quantumfinance-credit`, plano Consumption, mesma região), com política `rate-limit` por assinatura e um **429 real** demonstrado. Evidências programáticas em `docs/evidencias/apim_*.json`, `apim_teste_http.log` e `apim_teste_throttle.log`; **capturas do portal do APIM adicionadas** (telas 7, 9, 10 e 11 na tabela abaixo).
 
 ## Regras de privacidade (obrigatórias)
 
@@ -34,11 +34,11 @@ A instância `apim-quantumfinance-credit`, a API, o Named Value, a política `ra
 
 | # | Tela a capturar | Caminho no portal | O que deve aparecer | Arquivo em `docs/evidencias/` |
 |---|---|---|---|---|
-| 7 | Instância APIM | Portal → **API Management** → sua instância → **Visão geral** | Instância criada, nome/região/SKU | `apim_01_overview.png` |
-| 8 | API criada | APIM → **APIs** | `QuantumFinance Score` com operação **POST /predict** | `apim_02_api_criada.png` |
-| 9 | Política rate-limit | API → **All operations → Inbound processing → Code editor** | `<rate-limit calls="60" renewal-period="60" ...>` (conforme `deploy/apim-policy.xml`) | `apim_03_politica_rate_limit.png` |
-| 10 | Assinatura por parceiro | APIM → **Subscriptions** | Uma assinatura com scope na API QuantumFinance (chave **mascarada**) | `apim_04_subscriptions.png` |
-| 11 | Teste de 429 | Postman/`curl` → gateway APIM `.../credit-score/v1/predict` | Com `calls="3"` temporário: a 4ª chamada retorna **429** (retorne a política a 60 depois) | `apim_05_teste_429.png` |
+| 7 | Instância APIM | Portal → **API Management** → sua instância → **Visão geral** | Instância criada, nome/região/SKU | `captura_visao_geral_recurso_apim.png` ✅ |
+| 8 | API criada | APIM → **APIs** | `QuantumFinance Score` com operação **POST /predict** | *opcional (não capturada — já provada por `apim_api.json`/testes)* |
+| 9 | Política rate-limit | API → **All operations → Inbound processing → Code editor** | `<rate-limit calls="60" renewal-period="60" ...>` (conforme `deploy/apim-policy.xml`) | `captura_apim_politica_rate_limit.png` ✅ |
+| 10 | Assinatura por parceiro | APIM → **Subscriptions** | Uma assinatura com scope na API QuantumFinance (chave **mascarada**) | `captura_apim_subscription.png` ✅ |
+| 11 | Teste no gateway | Postman/`curl` → gateway APIM `.../credit-score/v1/predict` | Resposta do `POST /predict` via gateway (400/401/200/429) | `captura_apim_post_predict.png` ✅ |
 
 ## Depois de capturar
 
